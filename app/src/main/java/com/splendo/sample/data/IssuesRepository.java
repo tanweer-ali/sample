@@ -24,7 +24,7 @@ import io.reactivex.Observable;
 
 public class IssuesRepository {
 
-    private List<Issue> issues;
+    private static List<Issue> issues = null;
 
     /**
      * Get a list of in-memory Mocked Issues.
@@ -69,10 +69,23 @@ public class IssuesRepository {
      * @return
      */
     public Observable<List<Issue>> loadIssuesFromFile() {
-        issues = new ArrayList(0);
+        // return the issues as observable
+        return Observable.defer(() -> {
+            if(issues == null){
+                 blockThread();
+                readFromFile();
+            } else{
+                // just return the existing ones
+            }
+
+            return Observable.just(issues);
+        });
+    }
+
+    private void readFromFile() {
         File sdcard = Environment.getExternalStorageDirectory();
         File file = new File(sdcard, "file.txt");
-
+        List<Issue> issues = new ArrayList(0);
         if (file.exists()) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
@@ -94,11 +107,7 @@ public class IssuesRepository {
             }
         }
 
-        // return the issues as observable
-        return Observable.defer(() -> {
-            blockThread();
-            return Observable.just(issues);
-        });
+        this.issues = issues;
     }
 
     /**
@@ -121,14 +130,10 @@ public class IssuesRepository {
      * a helper method to block the current thread to simulate network delay
      */
     private void blockThread() {
-        Object lock = new Object();
-        // simulate a 2sec delay
-        synchronized (lock) {
-            try {
-                lock.wait(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.currentThread().sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
