@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +31,8 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     private IssuesAdapter adapter;
     private Permissions permissions;
 
+    private View progressBar;
+
     public static IssuesFragment newInstance() {
         return new IssuesFragment();
     }
@@ -39,7 +40,6 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     public IssuesFragment() {
         // empty public constructor
     }
-
 
     // clickListener for list-item clicks
     IssuesAdapter.IssueItemListener clickListener = new IssuesAdapter.IssueItemListener() {
@@ -57,7 +57,7 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
 
         // initializations
         this.adapter = new IssuesAdapter(emptyList, clickListener);
-        this.presenter = new IssuesPresenter(this); // pass 'this' as reference to the view
+        this.presenter = new IssuesPresenter(this, getActivity().getSupportLoaderManager());
     }
 
     @Nullable
@@ -69,6 +69,7 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+        progressBar = root.findViewById(R.id.progress);
 
         // load all issues into the view
         presenter.checkPermissions();
@@ -94,8 +95,12 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     }
 
     @Override
-    public void setProgressVisibility(boolean visibility) {
-
+    public void setProgressVisibility(boolean visible) {
+        if (visible) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -105,9 +110,8 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
 
     @Override
     public void onPermissionGranted() {
-        this.presenter.loadIssues();
-
-        //getActivity().getSupportLoaderManager().initLoader(R.id.loader_id, null, presenter);
+        //this.presenter.loadIssues();
+        this.presenter.startLoading();
     }
 
     @Override

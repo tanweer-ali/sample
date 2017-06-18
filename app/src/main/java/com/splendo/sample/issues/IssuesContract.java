@@ -29,7 +29,7 @@ public interface IssuesContract {
         Context getConext();
     }
 
-    interface UserActionListener extends LoaderManager.LoaderCallbacks<List<Issue>> {
+    interface UserActionListener  {
 
         void loadIssues();
 
@@ -39,10 +39,6 @@ public interface IssuesContract {
 
         void checkPermissions();
 
-        Loader<List<Issue>> onCreateLoader(int id, Bundle args);
-
-        void onLoadFinished(Loader<List<Issue>> loader, List<Issue> data);
-
-        void onLoaderReset(Loader<List<Issue>> loader);
+        void startLoading();
     }
 }
