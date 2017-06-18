@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.splendo.sample.R;
 import com.splendo.sample.data.Issue;
+import com.splendo.sample.issuedetail.IssueDetailFragment;
 import com.splendo.sample.utils.Permissions;
 
 import java.util.ArrayList;
@@ -53,8 +56,6 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         List<Issue> emptyList = new ArrayList<Issue>(0);
-        List<Issue> issues = new ArrayList<Issue>(0);
-
         // initializations
         this.adapter = new IssuesAdapter(emptyList, clickListener);
         this.presenter = new IssuesPresenter(this, getActivity().getSupportLoaderManager());
@@ -78,7 +79,7 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     }
 
     @Override
-    public Context getConext() {
+    public Context getViewContext() {
         return getContext();
     }
 
@@ -105,7 +106,7 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
 
     @Override
     public void showIssueDetail(Issue issue) {
-
+        showDetailFragment(issue);
     }
 
     @Override
@@ -128,6 +129,23 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         this.permissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    private void showDetailFragment(Issue issue) {
+        IssueDetailFragment fragment = new IssueDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("first", issue.firstName);
+        args.putString("last", issue.lastName);
+        args.putString("count", String.valueOf(issue.issueCount));
+        args.putLong("date", issue.dateOfBirth.getTime());
+        fragment.setArguments(args);
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        //transaction.add(fragment, "detail")
+        transaction.add(R.id.contentFrame, fragment)
+                .addToBackStack(null).commit();
     }
 
 }

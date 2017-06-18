@@ -20,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class IssuesPresenter implements IssuesContract.UserActionListener,
         LoaderManager.LoaderCallbacks<List<Issue>> {
+
     IssuesContract.View view;
     IssuesRepository repository;
     LoaderManager loaderMgr;
@@ -67,13 +68,13 @@ public class IssuesPresenter implements IssuesContract.UserActionListener,
 
     @Override
     public void openIssueDetail(Issue clickedIssue) {
-
+        this.view.showIssueDetail(clickedIssue);
     }
 
 
     @Override
     public Loader<List<Issue>> onCreateLoader(int id, Bundle args) {
-        return new IssueLoader(view.getConext());
+        return new IssueLoader(view.getViewContext());
     }
 
     @Override

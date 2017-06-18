@@ -1,9 +1,6 @@
 package com.splendo.sample.issues;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 
 import com.splendo.sample.data.Issue;
 import com.splendo.sample.utils.Permissions;
@@ -16,7 +13,7 @@ import java.util.List;
 
 public interface IssuesContract {
 
-    interface View extends Permissions.Callback{
+    interface View extends Permissions.Callback {
 
         void showIssues(List<Issue> issues);
 
@@ -26,10 +23,10 @@ public interface IssuesContract {
 
         void requestUserPermissions();
 
-        Context getConext();
+        Context getViewContext();
     }
 
-    interface UserActionListener  {
+    interface UserActionListener {
 
         void loadIssues();
 

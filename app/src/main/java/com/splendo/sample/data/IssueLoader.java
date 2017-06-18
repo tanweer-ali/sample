@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.v4.content.AsyncTaskLoader;
 
+import com.splendo.sample.utils.DateParser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -57,6 +59,7 @@ public class IssueLoader extends AsyncTaskLoader<List<Issue>> {
         List<Issue> issues = new ArrayList(0);
         File sdcard = Environment.getExternalStorageDirectory();
         File file = new File(sdcard, "file.txt");
+        DateParser parser = new DateParser();
 
         if (file.exists()) {
             try {
@@ -68,7 +71,7 @@ public class IssueLoader extends AsyncTaskLoader<List<Issue>> {
                     issue.firstName = parts[0].split("\"")[1];
                     issue.lastName = parts[1].split("\"")[1];
                     issue.issueCount = Integer.parseInt(parts[2]);
-                    issue.dateOfBirth = parseDate(parts[3].split("\"")[1]);
+                    issue.dateOfBirth = parser.parseDate(parts[3].split("\"")[1]);
                     issues.add(issue);
                 }
                 br.close();
@@ -80,13 +83,5 @@ public class IssueLoader extends AsyncTaskLoader<List<Issue>> {
         return issues;
     }
 
-    private Date parseDate(String part) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        try {
-            return format.parse(part);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }
