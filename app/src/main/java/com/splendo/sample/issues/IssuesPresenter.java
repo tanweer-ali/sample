@@ -1,7 +1,13 @@
 package com.splendo.sample.issues;
 
+import android.os.Bundle;
+import android.support.v4.content.Loader;
+
 import com.splendo.sample.data.Issue;
+import com.splendo.sample.data.IssueLoader;
 import com.splendo.sample.data.IssuesRepository;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -53,5 +59,22 @@ public class IssuesPresenter implements IssuesContract.UserActionListener {
 
     }
 
+
+    @Override
+    public Loader<List<Issue>> onCreateLoader(int id, Bundle args) {
+        return new IssueLoader(view.getConext());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Issue>> loader, List<Issue> issues) {
+        // pass it on to the view to display
+        view.setProgressVisibility(false);
+        view.showIssues(issues);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Issue>> loader) {
+
+    }
 
 }
