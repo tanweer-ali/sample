@@ -1,9 +1,11 @@
 package com.splendo.sample.issues;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +77,11 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     }
 
     @Override
+    public Context getConext() {
+        return getContext();
+    }
+
+    @Override
     public void requestUserPermissions() {
         permissions = new Permissions(this, this);
         permissions.checkPermissions();
@@ -82,6 +89,7 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
 
     @Override
     public void showIssues(List<Issue> issues) {
+
         adapter.setList(issues);
     }
 
@@ -98,6 +106,8 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
     @Override
     public void onPermissionGranted() {
         this.presenter.loadIssues();
+
+        //getActivity().getSupportLoaderManager().initLoader(R.id.loader_id, null, presenter);
     }
 
     @Override

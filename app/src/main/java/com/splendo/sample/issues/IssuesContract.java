@@ -1,5 +1,10 @@
 package com.splendo.sample.issues;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+
 import com.splendo.sample.data.Issue;
 import com.splendo.sample.utils.Permissions;
 
@@ -20,9 +25,11 @@ public interface IssuesContract {
         void showIssueDetail(Issue issue);
 
         void requestUserPermissions();
+
+        Context getConext();
     }
 
-    interface UserActionListener{
+    interface UserActionListener extends LoaderManager.LoaderCallbacks<List<Issue>> {
 
         void loadIssues();
 
@@ -32,5 +39,10 @@ public interface IssuesContract {
 
         void checkPermissions();
 
+        Loader<List<Issue>> onCreateLoader(int id, Bundle args);
+
+        void onLoadFinished(Loader<List<Issue>> loader, List<Issue> data);
+
+        void onLoaderReset(Loader<List<Issue>> loader);
     }
 }
