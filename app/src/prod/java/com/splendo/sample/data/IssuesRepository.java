@@ -24,6 +24,7 @@ import io.reactivex.Observable;
 public class IssuesRepository implements IssuesRepositoryContract {
 
     private List<Issue> issues = null;
+    private final String filename = "file.txt";
 
     public List<Issue> getIssues() {
         return getIssuesFromFile();
@@ -31,7 +32,7 @@ public class IssuesRepository implements IssuesRepositoryContract {
 
     private List<Issue> getIssuesFromFile() {
         File sdcard = Environment.getExternalStorageDirectory();
-        File file = new File(sdcard, "file.txt");
+        File file = new File(sdcard, filename);
         List<Issue> issues = new ArrayList(0);
         if (file.exists()) {
             try {

@@ -32,10 +32,6 @@ public class IssueDetailFragment extends Fragment implements IssueDetailContract
     public IssueDetailFragment(){
     }
 
-    @Override
-    public void showDetail(Issue issue) {
-
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -42,17 +42,6 @@ public class IssuesPresenter implements IssuesContract.UserActionListener,
     public void loadIssues() {
         // show the progress bar from the view
         view.setProgressVisibility(true);
-
-//        // load issues from the model on a separate thread
-//        repository
-//                .loadIssuesFromFile()
-//                .subscribeOn(Schedulers.io())               // worker thread
-//                .observeOn(AndroidSchedulers.mainThread())  // UI thread
-//                .subscribe(issues -> {
-//                    // pass it on to the view to display
-//                    view.setProgressVisibility(false);
-//                    view.showIssues(issues);
-//                });
     }
 
     @Override
