@@ -15,8 +15,8 @@ public class Permissions {
 
     private static final int PERMISSIONS_REQUEST_READ_SDCARD = 100;
 
-    Fragment fragment;
-    Callback callback;
+    private Fragment fragment;
+    private Callback callback;
 
     public interface Callback{
         void onPermissionGranted();

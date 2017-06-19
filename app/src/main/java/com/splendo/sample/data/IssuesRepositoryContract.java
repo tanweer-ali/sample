@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IssuesRepositoryContract {
 
-    public List<Issue> getIssues();
+    List<Issue> getIssues();
 
 }

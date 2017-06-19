@@ -15,7 +15,6 @@ public interface IssueDetailContract {
 
     interface View {
 
-        void showDetail(Issue issue);
     }
 
     interface UserActionListener  {
