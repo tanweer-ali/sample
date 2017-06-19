@@ -22,7 +22,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     private List<Issue> issues;
     private IssueItemListener itemListener;
 
-    public IssuesAdapter( List<Issue> issues, IssueItemListener itemListener){
+    IssuesAdapter(List<Issue> issues, IssueItemListener itemListener){
         this.issues = issues;
         this.itemListener = itemListener;
     }

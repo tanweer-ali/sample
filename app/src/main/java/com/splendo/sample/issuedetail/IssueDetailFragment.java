@@ -3,7 +3,6 @@ package com.splendo.sample.issuedetail;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.splendo.sample.R;
 import com.splendo.sample.data.Issue;
-import com.splendo.sample.utils.DateParser;
 
 import java.util.Date;
 
@@ -62,7 +60,7 @@ public class IssueDetailFragment extends Fragment implements IssueDetailContract
         View root = inflater.inflate(R.layout.fragment_detail, container, false);
         name = (TextView) root.findViewById(R.id.name);
         count = (TextView) root.findViewById(R.id.count);
-        calendarView = (CalendarView) root.findViewById(R.id.calendar);
+        calendarView = (CalendarView) root.findViewById(R.id.issue_date);
 
         name.setText(issue.firstName + " " + issue.lastName);
         count.setText(""+issue.issueCount);

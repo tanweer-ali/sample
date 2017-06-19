@@ -28,14 +28,14 @@ public interface IssuesContract {
 
     interface UserActionListener {
 
-        void loadIssues();
-
-        void addNewIssue();
-
-        void openIssueDetail(Issue clickedIssue);
+        void startLoading();
 
         void checkPermissions();
 
-        void startLoading();
+        void openIssueDetail(Issue clickedIssue);
+
+        void loadIssues();
+
+        void addNewIssue();
     }
 }

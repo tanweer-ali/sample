@@ -111,7 +111,6 @@ public class IssuesFragment extends Fragment implements IssuesContract.View {
 
     @Override
     public void onPermissionGranted() {
-        //this.presenter.loadIssues();
         this.presenter.startLoading();
     }
 
